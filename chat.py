@@ -25,7 +25,7 @@ def init_page():
 
 def main():
      # Google AI Studio APIキーの確認
-    api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = os.environ.get("GOOGLE_API_KEY")
     if not api_key:
         raise ValueError("GOOGLE_API_KEYが設定されていません。.envファイルを確認してください。")
     
