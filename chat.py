@@ -24,17 +24,25 @@ def init_page():
 
 
 def main():
+     # Google AI Studio APIキーの確認
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise ValueError("GOOGLE_API_KEYが設定されていません。.envファイルを確認してください。")
+    
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001"
+        model="models/embedding-001",
+        google_api_key=api_key
     )
-    db = load_db(embeddings)
-    init_page()
 
     llm = ChatGoogleGenerativeAI(
         model="gemini-1.5-flash",
         temperature=0.0,
         max_retries=2,
+        google_api_key=api_key
     )
+    
+    db = load_db(embeddings)
+    init_page()
 
     # オリジナルのSystem Instructionを定義する
     prompt_template = """
